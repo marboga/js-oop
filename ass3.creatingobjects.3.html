@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>creating objects part one</title>
+   </head>
+   <body>
+   <script type="text/javascript">
+
+function Vehicle(name, wheels, passengers, speed){
+	this.name = name;
+	this.wheels = wheels;
+	this.speed = speed;
+	this.passengers = passengers;
+	this.distance_traveled = 0;
+	this.VIN = Math.floor(Math.random()*(9999999999 - 1000000000)) + 1000000000;
+}
+
+Vehicle.prototype.makeNoise = function (){
+	console.log('tweet tweet!')
+	return this;
+}
+Vehicle.prototype.updateDistanceTraveled = function() {
+	this.distance_traveled += this.speed;
+	return this;
+}
+Vehicle.prototype.checkMiles = function() {
+	console.log(this.distance_traveled);
+	return this;
+}
+Vehicle.prototype.move = function() {
+	this.updateDistanceTraveled();
+	this.makeNoise();
+	this.checkMiles();
+	return this;
+}
+Vehicle.prototype.checkVIN = function() {
+	console.log('VIN = ', this.VIN);
+	return this;
+}
+
+
+bike1 = new Vehicle("bike", 2, 1,25);
+	this.makeNoise = function (){
+		console.log('ring ring!');
+	}
+
+bike2 = new Vehicle("bike", 2, 1,25);
+	this.makeNoise = function (){
+		console.log('ring ring!');
+	}
+
+sedan = new Vehicle("sedan", 2, 1, 65);
+	this.makeNoise = function (){
+		console.log('beep beep!');
+	}
+
+bus = new Vehicle("bus", 2, 1, 55);
+	this.pickUpPassengers = function (number){
+		this.passengers += number;
+		console.log(this.passengers);
+	}
+
+   </script>
+   </body>
+</html>
