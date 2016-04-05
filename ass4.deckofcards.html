@@ -2,24 +2,105 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>Deck of Cards</title>
 	</head>
 	<body>
 		<script type="text/javascript">
 
-			function Deck(number, suit) {
-				this.number = number;
-				this.suit = suit;
+		function Deck(){
+			suits = ['hearts', 'diamonds', 'spades', 'clubs'];
+			ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'];
+			this.deck = [];
+			for(i=0; i<suits.length; i++){
+				for(j=0; j<ranks.length; j++){
+					card = new Card(suits[i], ranks[j]);
+					this.deck.push(card);
+				}
 			}
-			Deck.prototype.shuffle = function() {
-				
+			return this;
+		}
+
+		Deck.prototype.shuffle = function(){
+		    shuffles = Math.floor((Math.random()*15)+15);
+		    this.shuffled = [];
+		    var n = this.deck.length;
+		    while(n>0){
+		        var i = Math.floor(Math.random()*this.deck.length);
+		            if(i in this.deck){
+		            this.shuffled.push(this.deck[i]);
+		            console.log("pushing this: ", i, "into this: ", this.shuffled)
+		            delete this.deck[i];
+		            console.log(n);
+		            n--;
+		        }
+		    }
+		    this.deck = this.shuffled;
+		    return this.deck;
+		}
+
+		Deck.prototype.reset = function(){
+		    newdeck = new Deck();
+		    this.deck = newdeck.deck;
+		    return this.deck;
+		}
+
+		Deck.prototype.deal = function(player){
+		    player.hand.push(this.deck[this.deck.length-1])
+			 console.log('dealing '+this.deck[this.deck.length-1].rank," of ",this.deck[this.deck.length-1].suit,' to ',player.name)
+		    this.deck.pop()
+			 return this;
+		}
+
+
+		function Card(suit, rank){
+			this.name=rank+" of "+suit;
+			this.suit=suit;
+			this.rank=rank;
+			this.print = function(){
+			  console.log(this.suit, this.rank);
+			};
+			return this;
+		}
+
+		function Player(name){
+			this.name = name;
+			this.hand = [];
+			this.showHand = function() {
+			console.log(this.hand);
+				}
+			this.discard = function(card){
+				this.hand.pop();
+				}
 			}
 
 
+		mydeck = new Deck();
 
+		Kris = new Player('Kris');
+		John = new Player('John');
+		Jerry = new Player('Jerry');
+		Roger = new Player('Roger');
+		Table = new Player('Table');
 
+		mydeck.reset();
+		for(var i=0; i<mydeck.deck.length; i++){
+		    mydeck.deck[i].print();
+		};
 
+		mydeck.shuffle();
+		console.log("Shuffling...")
+		for(var i=0; i<mydeck.deck.length; i++){
+			mydeck.deck[i].print();
+		}
 
+		mydeck.deal(Kris).deal(John).deal(Jerry).deal(Roger);
+		mydeck.deal(Kris).deal(John).deal(Jerry).deal(Roger);
+		mydeck.deal(Table),mydeck.deal(Table),mydeck.deal(Table);
+		Kris.showHand();
+		John.showHand();
+		Jerry.showHand();
+		Roger.showHand();
+		Table.showHand();
 		</script>
 	</body>
 </html>
